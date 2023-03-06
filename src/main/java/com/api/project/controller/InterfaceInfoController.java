@@ -6,6 +6,7 @@ import com.api.project.common.*;
 import com.api.project.constant.CommonConstant;
 import com.api.project.exception.BusinessException;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.api.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.api.project.model.entity.InterfaceInfo;
@@ -15,6 +16,8 @@ import com.api.project.service.InterfaceInfoService;
 import com.api.project.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -230,7 +233,7 @@ public class InterfaceInfoController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "接口验证失败");
         }
         //仅本人或管理员可修改
-        InterfaceInfo interfaceInfo =new InterfaceInfo();
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
         interfaceInfo.setId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
@@ -246,7 +249,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/offline")
-    @AuthCheck(mustRole = "admin")
+    @AuthCheck(mustRole = "admin")//仅管理员调用
     public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
                                                       HttpServletRequest request) {
         //校验该接口是否存在
@@ -261,11 +264,47 @@ public class InterfaceInfoController {
         }
 
         //仅本人或管理员可修改
-        InterfaceInfo interfaceInfo =new InterfaceInfo();
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
         interfaceInfo.setId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
 
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                      HttpServletRequest request) {
+        //校验该接口是否存在
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        //当前用户的设置
+        ApiClient tempClient = new ApiClient(accessKey, secretKey);
+        Gson gson = new Gson();
+        com.api.apiclientsdk.model.User user = gson.fromJson(userRequestParams, com.api.apiclientsdk.model.User.class);
+
+        String usernameByPost =tempClient.getUsernameByPost(user);
+
+        return ResultUtils.success(usernameByPost);
+    }
 }

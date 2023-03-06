@@ -24,20 +24,8 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         if (interfaceInfo == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        Long id = interfaceInfo.getId();
+
         String name = interfaceInfo.getName();
-        String description = interfaceInfo.getDescription();
-        String url = interfaceInfo.getUrl();
-        String requestHeader = interfaceInfo.getRequestHeader();
-        String responseHeader = interfaceInfo.getResponseHeader();
-        Date createTime = interfaceInfo.getCreateTime();
-        Date updateTime = interfaceInfo.getUpdateTime();
-        Integer status = interfaceInfo.getStatus();
-        Long userId = interfaceInfo.getUserId();
-        String method = interfaceInfo.getMethod();
-        Integer isDelete = interfaceInfo.getIsDelete();
-
-
         // 创建时，所有参数必须非空
         if (add) {
             if (StringUtils.isAnyBlank(name)) {
