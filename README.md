@@ -1,10 +1,34 @@
-# API接口平台 
+# 嵌糕API接口平台 
+
+
+
+## 技术选型
+
+#### 前端
+
+1. React 18
+2. Ant Design Pro 5.x 脚手架
+3. Ant Design & Procomponents 组件库
+4. Umi 4 前端框架
+5. OpenAPI 前端代码生成
+
+#### 后端
+
+后端通过访问 localhost:7529/api/doc.html 就能在线调试接口，不需要前端配合
+
+1. Java Spring Boot
+2. MySQL 数据库
+3. MyBatis-Plus 及 MyBatis X 自动生成
+4. API 签名认证（Http 调用）
+5. Spring Boot Starter（SDK 开发）
+6. Dubbo 分布式（RPC、Nacos）
+7. Swagger + Knife4j 接口文档生成
+8. Spring Cloud Gateway 微服务网关
+9. Hutool、Apache Common Utils、Gson 等工具库
 
 
 
 ## 模板功能
-
-访问 localhost:7529/api/doc.html 就能在线调试接口，不需要前端配合
 
 - Spring Boot 2.7.0（贼新）
 - Spring MVC
