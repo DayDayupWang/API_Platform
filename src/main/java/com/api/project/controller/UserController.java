@@ -1,5 +1,6 @@
 package com.api.project.controller;
 
+import com.api.apicommon.model.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
@@ -8,9 +9,7 @@ import com.api.project.common.DeleteRequest;
 import com.api.project.common.ErrorCode;
 import com.api.project.common.ResultUtils;
 import com.api.project.exception.BusinessException;
-import com.api.project.model.dto.*;
 import com.api.project.model.dto.user.*;
-import com.api.project.model.entity.User;
 import com.api.project.model.vo.UserVO;
 import com.api.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;

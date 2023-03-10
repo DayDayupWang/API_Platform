@@ -1,9 +1,10 @@
 package com.api.project.service.impl;
 
+
+import com.api.apicommon.model.entity.UserInterfaceInfo;
 import com.api.project.common.ErrorCode;
 import com.api.project.exception.BusinessException;
 import com.api.project.mapper.UserInterfaceInfoMapper;
-import com.api.project.model.entity.UserInterfaceInfo;
 import com.api.project.service.UserInterfaceInfoService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,7 +36,7 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     }
 
     @Override
-    public  boolean invokeCount(Long interfaceInfoId, long userId){
+    public boolean invokeCount(long interfaceInfoId, long userId) {
         if (interfaceInfoId<=0||userId<=0){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -44,8 +45,9 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
         updateWrapper.eq("userId",userId);
         updateWrapper.gt("leftNum",0);
         updateWrapper.setSql("leftNum=leftNum-1,totalNum=totalNum+1");
-       return this.update(updateWrapper);
+        return this.update(updateWrapper);
     }
+
 }
 
 

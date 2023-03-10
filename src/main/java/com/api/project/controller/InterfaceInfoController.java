@@ -1,6 +1,9 @@
 package com.api.project.controller;
 
+
 import com.api.apiclientsdk.client.ApiClient;
+import com.api.apicommon.model.entity.InterfaceInfo;
+import com.api.apicommon.model.entity.User;
 import com.api.project.annotation.AuthCheck;
 import com.api.project.common.*;
 import com.api.project.constant.CommonConstant;
@@ -9,15 +12,12 @@ import com.api.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.api.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.api.project.model.entity.InterfaceInfo;
-import com.api.project.model.entity.User;
 import com.api.project.model.enums.InterfaceInfoStatusEnum;
 import com.api.project.service.InterfaceInfoService;
 import com.api.project.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

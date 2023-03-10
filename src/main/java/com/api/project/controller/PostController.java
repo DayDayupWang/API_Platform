@@ -1,5 +1,6 @@
 package com.api.project.controller;
 
+import com.api.apicommon.model.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.api.project.annotation.AuthCheck;
@@ -10,12 +11,9 @@ import com.api.project.common.ResultUtils;
 import com.api.project.constant.CommonConstant;
 import com.api.project.exception.BusinessException;
 import com.api.project.model.dto.post.PostAddRequest;
-import com.api.project.model.dto.post.PostDoThumbRequest;
 import com.api.project.model.dto.post.PostQueryRequest;
 import com.api.project.model.dto.post.PostUpdateRequest;
 import com.api.project.model.entity.Post;
-import com.api.project.model.entity.User;
-import com.api.project.model.vo.PostVO;
 import com.api.project.service.PostService;
 import com.api.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 /**
  * 帖子接口
