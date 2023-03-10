@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 用户查询请求
  *
- * @author api
+ * @author wyh
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

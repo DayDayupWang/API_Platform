@@ -3,7 +3,7 @@ package com.api.project.common;
 /**
  * 错误码
  *
- * @author api
+ * @author wyh
  */
 public enum ErrorCode {
 

@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * 帖子接口
  *
- * @author api
+ * @author wyh
  */
 @RestController
 @RequestMapping("/interfaceInfo")

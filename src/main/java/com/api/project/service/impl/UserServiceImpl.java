@@ -24,7 +24,7 @@ import static com.api.project.constant.UserConstant.USER_LOGIN_STATE;
 /**
  * 用户服务实现类
  *
- * @author api
+ * @author wyh
  */
 @Service
 @Slf4j

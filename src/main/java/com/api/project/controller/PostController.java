@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 /**
  * 帖子接口
  *
- * @author api
+ * @author wyh
  */
 @RestController
 @RequestMapping("/post")

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 用户创建请求
  *
- * @author api
+ * @author wyh
  */
 @Data
 public class UserAddRequest implements Serializable {

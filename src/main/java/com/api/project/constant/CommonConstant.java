@@ -3,7 +3,7 @@ package com.api.project.constant;
 /**
  * 通用常量
  *
- * @author api
+ * @author wyh
  */
 public interface CommonConstant {
 
