@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * 用户接口管理
  *
  * @author wyh
  */

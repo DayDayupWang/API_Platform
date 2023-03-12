@@ -1,5 +1,6 @@
 package com.api.project.aop;
 
+import com.api.apicommon.model.entity.User;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.api.project.annotation.AuthCheck;
 import com.api.project.common.ErrorCode;

@@ -7,13 +7,12 @@ public interface InnerUserInterfaceInfoService {
 
 
     /**
-     * 是否还有调用次数
-     *
-     * @param userId          用户id
-     * @param interfaceInfoId 接口id
-     * @return boolean
+     * 查询是否还有接口次数
+     * @param userId
+     * @param interfaceInfoId
+     * @return
      */
-    boolean hasInvokeNum(long userId, long interfaceInfoId);
+     boolean hasInvokeNum(long userId, long interfaceInfoId);
 
     /**
      * 调用接口统计

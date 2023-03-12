@@ -1,19 +1,20 @@
 package com.api.apicommon.service;
 
-import com.api.apicommon.model.entity.User;
 
+import com.api.apicommon.model.entity.*;
 
 /**
  * 用户服务
  *
- * @author yupi
+ * @author wyh
  */
 public interface InnerUserService {
 
     /**
      * 数据库中查是否已分配给用户秘钥（accessKey）
+     *
      * @param accessKey
      * @return
      */
-    User getInvokeUser(String accessKey,String secretKey);
+    User  getInvokerUser(String accessKey);
 }

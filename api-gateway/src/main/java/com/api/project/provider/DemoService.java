@@ -16,21 +16,16 @@
  */
 package com.api.project.provider;
 
+import java.util.concurrent.CompletableFuture;
 
-import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.rpc.RpcContext;
+public interface DemoService {
 
-@DubboService
-public class DemoServiceImpl implements DemoService {
+    String sayHello(String name);
 
-    @Override
-    public String sayHello(String name) {
-        System.out.println("Hello " + name + ", request from consumer: " + RpcContext.getContext().getRemoteAddress());
-        return "Hello " + name;
+    String sayHello2(String name);
+
+    default CompletableFuture<String> sayHelloAsync(String name) {
+        return CompletableFuture.completedFuture(sayHello(name));
     }
 
-    @Override
-    public String sayHello2(String name) {
-        return "qiangao";
-    }
 }

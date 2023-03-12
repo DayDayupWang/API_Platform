@@ -18,16 +18,13 @@ public class InnerUserServiceImpl implements InnerUserService {
     private UserMapper userMapper;
 
     @Override
-    public User getInvokeUser(String accessKey,String secretKey) {
-       if (StringUtils.isAnyBlank(accessKey,secretKey)){
-           throw new BusinessException(ErrorCode.PARAMS_ERROR);
-       }
+    public User getInvokerUser(String accessKey) {
+        if (StringUtils.isAnyBlank(accessKey)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-       queryWrapper.eq("accessKey",accessKey);
-       queryWrapper.eq("secretKey",secretKey);
-        com.api.apicommon.model.entity.User user =  userMapper.selectOne(queryWrapper);
+        queryWrapper.eq("accessKey", accessKey);
+        com.api.apicommon.model.entity.User user = userMapper.selectOne(queryWrapper);
         return user;
     }
-
-
 }

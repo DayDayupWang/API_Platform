@@ -5,6 +5,7 @@ package com.api.project.service.impl.inner;
 
 import com.api.apicommon.model.entity.InterfaceInfo;
 import com.api.apicommon.service.InnerInterfaceInfoService;
+import com.api.apicommon.service.InnerUserInterfaceInfoService;
 import com.api.project.common.ErrorCode;
 import com.api.project.exception.BusinessException;
 import com.api.project.mapper.InterfaceInfoMapper;

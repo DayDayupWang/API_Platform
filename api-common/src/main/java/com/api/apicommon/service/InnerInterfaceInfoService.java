@@ -1,6 +1,6 @@
 package com.api.apicommon.service;
 
-import com.api.apicommon.model.entity.InterfaceInfo;
+import com.api.apicommon.model.entity.*;
 
 /**
  *
