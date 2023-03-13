@@ -22,10 +22,7 @@
         createTime,updateTime,isDelete
     </sql>
     <select id="listTopInvokeInterfaceInfo" resultType="com.api.apicommon.model.entity.UserInterfaceInfo">
-        SELECT interface_info_id AS id,
-               SUM(total_num)    AS invoke_num
-        FROM user_interface_info
-        GROUP BY interface_info_id
-        ORDER BY invoke_num DESC LIMIT #{limit}
+        select interfaceInfoId, sum(totalNum) as totalNum from user_interface_info group by interfaceInfoId
+        order by totalNum desc limit #{limit};
     </select>
 </mapper>

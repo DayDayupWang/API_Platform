@@ -5,13 +5,12 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
-import com.api.apiclientsdk.model.User;
-
+import com.api.apiclientsdk.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import static com.api.apiclientsdk.utils.SignUtils.genSign;
 
+import static com.api.apiclientsdk.utils.SignUtils.genSign;
 
 /**
  * 调用第三方接口的客户端
@@ -30,7 +29,13 @@ public class ApiClient {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "ApiClient{" +
+                "accessKey='" + accessKey + '\'' +
+                ", secretKey='" + secretKey + '\'' +
+                '}';
+    }
 
     public String getNameByGet(String name) {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
@@ -64,6 +69,7 @@ public class ApiClient {
         hashMap.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
         //加签名
         hashMap.put("sign", genSign(body, secretKey));
+        log.info("getHeaderMap is: " + hashMap);
         return hashMap;
     }
 

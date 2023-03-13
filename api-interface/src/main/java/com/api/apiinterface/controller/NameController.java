@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/name")
 public class NameController {
+
+
     @GetMapping("/get")
     public String getNameByGet(String name, HttpServletRequest request) {
         String accessKey = request.getHeader("accessKey");

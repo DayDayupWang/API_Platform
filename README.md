@@ -1,8 +1,25 @@
 # 嵌糕API接口平台 
 
+王艺澔
 
 
-## 技术选型
+
+# 一、 项目介绍
+
+- 嵌糕API接口平台是一个基于 React + Spring Boot + Dubbo + Gateway 的API接口开放调用平台。可以帮助企业、个人统一开放接口，减少沟通成本，**避免重复造轮子**，为业务高效赋能。
+- 主要功能：
+
+  - SDK快速调用接口
+  - API接入
+  - 防止攻击（黑白名单） 
+  - 不能随便调用（限制、开通） 
+  - 统计调用次数 
+  - 计费 
+  - 流量保护
+
+# 二、 开发思路
+
+### 2.1 技术选型
 
 #### 前端
 
@@ -28,24 +45,58 @@
 
 
 
-## 模板功能
+### 2.2 功能架构
 
-- Spring Boot 2.7.0（贼新）
-- Spring MVC
-- MySQL 驱动
-- MyBatis
-- MyBatis Plus
-- Spring Session Redis 分布式登录
-- Spring AOP
-- Apache Commons Lang3 工具类
-- Lombok 注解
-- Swagger + Knife4j 接口文档
-- Spring Boot 调试工具和项目处理器
-- 全局请求响应拦截器（记录日志）
-- 全局异常处理器
-- 自定义错误码
-- 封装通用响应类
-- 示例用户注册、登录、搜索功能
-- 示例单元测试类
-- 示例 SQL（用户表）
+#### 项目分工
 
+● api-frontend：8000端口，前端向用户展示的界面，与后端通过OpenAPI协调参数和端口
+● api-backend：7529端口，后端接口管理（上传、下线、用户登录）后端接口文档位于http://localhost:7529/api/doc.html
+● api-gateway：8090端口，网关
+● api-interface：8123端口，接收经过网关验证的请求，提供各种接口服务
+● api-client-sdk：客户端SDK，无端口，用于后端人员快速调试，发送请求到8090端口，由网关进行转发到后端的api-interface
+● api-common：封装了一些公共的类和接口，用Maven进行管理放置在本地仓库中，并被其他项目引用依赖，实现了功能的解耦
+
+
+
+#### 架构图
+
+![image-20230313151901701](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131519773.png)
+
+### 2.3. 使用者角色
+
+- 网络管理员：用系统给定的账号进行登录，可以对接口进行管理，并通过客户端 SDK 轻松调用接口。
+- 用户：登录移动端应用，可以浏览菜品、添加购物车、设置地址、在线下单等。
+
+
+
+
+
+# 三、 产品成品展示
+
+### 登录界面
+
+![image-20230313145059260](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131450331.png)
+
+
+
+### 接口信息主页
+
+![image-20230313144345544](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131443597.png)
+
+### 接口管理界面
+
+![image-20230313144304818](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131443933.png)
+
+### 接口分析界面
+
+![image-20230313143243883](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131432025.png)
+
+### 接口调用界面
+
+![image-20230313145326221](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131453285.png)
+
+
+
+### 后端接口文档界面
+
+![image-20230313145506742](https://typingcat-picbed.oss-cn-hangzhou.aliyuncs.com/img/202303131455825.png)

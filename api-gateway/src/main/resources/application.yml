@@ -16,6 +16,7 @@ spring:
           predicates:
             - Path=/api/**
 
+
 #          filters:
 #            - AddRequestParameter=name, dog  #添加请求参数
 #            - name: CircuitBreaker
@@ -29,7 +30,7 @@ spring:
 
 dubbo:
   application:
-    name: dubbo-springboot-demo-provider
+    name: api-gateway
   protocol:
     name: dubbo
     port: -1

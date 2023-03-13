@@ -8,7 +8,6 @@ import com.api.apicommon.service.InnerUserInterfaceInfoService;
 import com.api.apicommon.service.InnerUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -42,7 +41,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
     private static final List<String> IP_WHITE_LIST = Arrays.asList("127.0.0.1");
 
     //接口信息HOST域名
-    private static final String INTERFACE_HOST = "http://localhost:8090";
+    private static final String INTERFACE_HOST = "http://localhost:8123";
 
     private static final long FIVE_MINUTES = 5 * 60 * 1000L;
     @DubboReference
@@ -54,7 +53,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
     @DubboReference
     private InnerUserInterfaceInfoService innerUserInterfaceInfoService;
 
-    //1.用户发送请求到API网关
+    //0.用户发送请求到API网关
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
@@ -88,13 +87,13 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         String sign = headers.getFirst("sign");
         String body = headers.getFirst("body");
         // todo 实际情况应该是去数据库中查是否已分配给用户
-        User invokerUser = null;
+        User invokeUser = null;
         try {
-            invokerUser = innerUserService.getInvokerUser(accessKey);
+            invokeUser = innerUserService.getInvokerUser(accessKey);
         } catch (Exception e) {
             log.error("getInvokerUser error", e);
         }
-        if (invokerUser == null) {
+        if (invokeUser == null) {
             return handleNoAuth(response);
         }
 
@@ -103,18 +102,20 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         //    return handleNoAuth(response);
         //}
 
-        //判断时间
+        // 验证apiClient的随机数nonce
         if (Long.parseLong(nonce) > 10000L) {
             return handleNoAuth(response);
         }
+        
         // 时间和当前时间不能超过 5 分钟
         long currentTime = System.currentTimeMillis() / 1000;
 
         if ((currentTime - Long.parseLong(timestamp)) >= FIVE_MINUTES) {
             return handleInvokeError(response);
         }
-        // 实际情况中是从数据库中查出 secretKey
-        String secretKey = invokerUser.getSecretKey();
+        
+        // 从数据库中查出 secretKey
+        String secretKey = invokeUser.getSecretKey();
         //此处直接使用管理员写死sk的方式通过验证进行测试
         String serverSign = SignUtils.genSign(body, secretKey);
         if (sign == null || !sign.equals(serverSign)) {
@@ -133,13 +134,18 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             return handleInvokeError(response);
         }
 
+        log.info("过滤完成,准备处理响应,查询到的用户信息:" + invokeUser);
+        log.info("过滤完成,准备处理响应,查询到的接口信息:" + interfaceInfo);
+        log.info("接口是否有剩余次数:" + innerUserInterfaceInfoService.hasInvokeNum(invokeUser.getId(), interfaceInfo.getId()));
+
+
         //  是否有调用次数
-        if (!innerUserInterfaceInfoService.hasInvokeNum(invokerUser.getId(), interfaceInfo.getId())) {
+        if (!innerUserInterfaceInfoService.hasInvokeNum(invokeUser.getId(), interfaceInfo.getId())) {
             return handleInvokeError(response);
         }
         //6.请求转发，调用模拟接口
         //7.响应日志
-        return handleResponse(exchange, chain, interfaceInfo.getId(), invokerUser.getId());
+        return handleResponse(exchange, chain, interfaceInfo.getId(), invokeUser.getId());
 
     }
 
